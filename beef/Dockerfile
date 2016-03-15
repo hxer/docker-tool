@@ -34,8 +34,8 @@ RUN useradd -d /opt/beef -m -s /bin/bash beef
 WORKDIR /opt/beef/
 COPY code/ /opt/beef/
 
-RUN ["chown", "beef:beef", "*"]
-RUN ["chmod", "u+x", "*.sh"]
+RUN ["chown", "beef:beef", "install.sh"]
+RUN ["chmod", "u+x", "install.sh"]
 
 RUN ["su", "beef", "-lc", "./install.sh"]
 
