@@ -30,6 +30,8 @@ RUN git clone git://github.com/beefproject/beef.git
 
 WORKDIR /opt/beef
 
+RUN bundle install
+
 EXPOSE 3000
 
 CMD ["./beef"]
