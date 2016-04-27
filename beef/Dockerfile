@@ -1,47 +1,38 @@
-FROM debian:jessie
+FROM  ubuntu:14.04
 
 MAINTAINER janes <miscjanes@gmail.com>
 
-# Install program to configure locales
-RUN apt-get update \
-    && apt-get install -y locales \
-    && dpkg-reconfigure locales && \
-        locale-gen C.UTF-8 \
-    && /usr/sbin/update-locale LANG=C.UTF-8
-
-# Install needed default locale for Makefly
-RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
-    && locale-gen
-
 # Set default locale for the environment
-ENV LC_ALL C.UTF-8
+RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 
-RUN  apt-get install -y --no-install-recommends \
-        autoconf automake bison build-essential bzip2 \
-        ca-certificates curl g++ gawk gcc git libc6-dev \
-        libffi-dev libgdbm-dev libncurses5-dev libreadline6 \
-        libreadline6-dev libsqlite3-0 libsqlite3-dev libssl-dev \
-        libtool libxml2-dev libxslt1-dev libyaml-dev make openssl \
-        patch pkg-config procps sqlite3 subversion zlib1g zlib1g-dev \
+RUN  apt-get update \
+     && apt-get install -y --no-install-recommends \
+        build-essential \
+        git \
+        libsqlite3-dev \
+        software-properties-common sqlite3 \
+     && apt-add-repository -y ppa:brightbox/ruby-ng \
+     && apt-get update \
+     && apt-get install -y \
+        ruby2.2 \
+        ruby2.2-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# add user beef
-RUN useradd -d /opt/beef -m -s /bin/bash beef
+RUN gem install bundler
 
-WORKDIR /opt/beef/
-COPY code/ /opt/beef/
+WORKDIR /opt
 
-RUN ["chown", "beef:beef", "install.sh"]
-RUN ["chmod", "u+x", "install.sh"]
+RUN git clone git://github.com/beefproject/beef.git
 
-RUN ["su", "beef", "-lc", "./install.sh"]
+WORKDIR /opt/beef
 
 EXPOSE 3000
 
-CMD ["su", "beef", "-lc", "cd bf && ./beef"]
+CMD ["./beef"]
 
 
 
