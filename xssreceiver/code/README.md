@@ -9,7 +9,7 @@
 
 ##安装说明
 ###自动安装
-* 安装http server与php5环境（ubuntu: sudo apt-get install apache2 php5）
+* 安装http server与php环境（ubuntu: sudo apt-get install apache2 php5 或 sudo apt-get install apache2 php7.0 libapache2-mod-php7.0）
 * 上传所有文件至空间根目录
 * 访问http://网站地址/
  
@@ -37,7 +37,7 @@ define('ENABLE_ENCRYPT', true);
 define('ENCRYPT_PASS', "bluelotus");
 define('ENCRYPT_TYPE', "RC4");
 ```
-* PASS为登录密码，可用`php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='你的密码';$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;"`生成密码hash
+* PASS为登录密码，可用`php -r '$salt="!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";$key="你的密码";$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;'`生成密码hash
 * 赋予`DATA_PATH`，`MY_JS_PATH`，`JS_TEMPLATE_PATH`对应的目录写权限
 * 当有请求访问/index.php?a=xxx&b=xxxx，所有携带数据包括get，post，cookie，httpheaders，客户端信息都会记录
 * 可访问admin.php登录查看记录的数据，初始登录密码bluelotus

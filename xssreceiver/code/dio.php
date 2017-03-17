@@ -2,7 +2,6 @@
 if ( !defined('IN_XSS_PLATFORM') ) {
     exit('Access Denied');
 }
-require_once("load.php");
 require_once("functions.php");
 
 //时间戳的正则表达式
@@ -50,7 +49,7 @@ function load_xss_record( $id ) {
         
         $isChange = false;
         if ( !isset( $info['location'] ) ) {
-            $info['location'] = convertip( $info['user_IP'], IPDATA_PATH );
+            $info['location'] = convertIP( $info['user_IP'], IPDATA_PATH );
             $isChange         = true;
         }
         
@@ -116,7 +115,7 @@ function list_xss_record_detail() {
         $isChange = false;
         //如果没有设置location，就查询qqwry.dat判断location
         if ( !isset( $info['location'] ) ) {
-            $info['location'] = convertip( $info['user_IP'], IPDATA_PATH );
+            $info['location'] = convertIP( $info['user_IP'], IPDATA_PATH );
             $isChange         = true;
         }
         
